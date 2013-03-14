@@ -1401,6 +1401,28 @@ class MetaData:
             return meta
 
 
+    def get_tvdb_list(self, name):
+        '''
+        Requests meta data from TVDB and creates array to send back
+        
+        Args:
+            name (str): full name of movie you are searching
+                        
+        Returns:
+            ARRAY. [ [seriesid, SeriesName, IMDB_ID], [seriesid, SeriesName, IMDB_ID] ]
+        '''      
+        addon.log('Starting TVDB Lookup', 0)
+        tvdb = TheTVDB()
+        try:
+            show_list=tvdb.get_matching_shows(name)
+        except Exception, e:
+            addon.log('************* Error retreiving from thetvdb.com: %s ' % e, 4)
+            show_list = []
+            pass
+
+        return show_list
+
+
     def search_movies(self, name):
         '''
         Requests meta data from TMDB for any movie matching name
